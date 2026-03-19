@@ -44,7 +44,7 @@ footerSection.innerHTML = /* html */ `
     <div class="rx-foot">
       <div class="rx-foot-lbl">Ruby Diagnostic Clinic<br/>Answer Report</div>
       <div class="sign-box">
-        <div class="sign-name">Yukihiro Matsumoto</div>
+        <div class="sign-name">test test</div>
         <div class="sign-title">処方医署名 / Prescriber</div>
       </div>
       <div class="wasm-status">
@@ -55,8 +55,7 @@ footerSection.innerHTML = /* html */ `
   </div>
 `
 
-// ── Boot WASM & populate ───────────────────────────────────────────────────
-;(async () => {
+// ── Boot WASM & populate ───────────────────────────────────────────────────(async () => {
   try {
     const { results, rubyVersion } = await evalAllCandidates(CANDIDATE_CHAINS)
 

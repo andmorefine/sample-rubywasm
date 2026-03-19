@@ -72,7 +72,7 @@ footerSection.innerHTML = /* html */ `
     <div class="rx-foot">
       <div class="rx-foot-lbl">Ruby Diagnostic Clinic<br/>Prescription Form</div>
       <div class="sign-box">
-        <div class="sign-name">Yukihiro Matsumoto</div>
+        <div class="sign-name">test test</div>
         <div class="sign-title">処方医署名 / Prescriber</div>
       </div>
       <div class="wasm-status">
