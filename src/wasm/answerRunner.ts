@@ -19,7 +19,7 @@ function loadUmdScript(): Promise<void> {
   return new Promise((resolve, reject) => {
     const s = document.createElement('script')
     s.src = WASM_UMD
-    s.onload = () => resolve()
+    s.onload  = () => resolve()
     s.onerror = () => reject(new Error('Failed to load ruby-wasm-wasi UMD'))
     document.head.appendChild(s)
   })
@@ -33,25 +33,18 @@ export interface AnswerRunResult {
 export async function evalAllCandidates(candidates: CandidateDef[]): Promise<AnswerRunResult> {
   await loadUmdScript()
   const { DefaultRubyVM } = window['ruby-wasm-wasi']
-  const buffer = await fetch(WASM_CDN).then((r) => r.arrayBuffer())
-  const mod = await WebAssembly.compile(buffer)
+  const buffer = await fetch(WASM_CDN).then(r => r.arrayBuffer())
+  const mod    = await WebAssembly.compile(buffer)
   const { vm } = await DefaultRubyVM(mod)
   const rubyVersion = vm.eval('RUBY_VERSION').toString()
 
-  const results: CandidateResult[] = candidates.map((c) => {
+  const results: CandidateResult[] = candidates.map(c => {
     try {
       const value = vm.eval(c.code).toString()
-      const type = vm.eval(`(${c.code}).class.to_s`).toString()
+      const type  = vm.eval(`(${c.code}).class.to_s`).toString()
       return { label: c.label, code: c.code, value, type, error: false, tier: c.tier as Tier }
     } catch {
-      return {
-        label: c.label,
-        code: c.code,
-        value: 'error',
-        type: '—',
-        error: true,
-        tier: c.tier as Tier,
-      }
+      return { label: c.label, code: c.code, value: 'error', type: '—', error: true, tier: c.tier as Tier }
     }
   })
 
