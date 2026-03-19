@@ -7,7 +7,11 @@ import { renderHeader, updateWasmStatus } from '#/components/header'
 import { renderPalette, updatePalette } from '#/components/palette'
 import { renderChainBuilder, updateChainBuilder } from '#/components/chainBuilder'
 import { renderRunBar, updateRunBar } from '#/components/runBar'
-import { renderResultPanel, showResultPanel, hideResultPanel } from '#/components/resultPanel'
+import {
+  renderResultPanel,
+  showResultPanel,
+  hideResultPanel,
+} from '#/components/resultPanel'
 import { attachTouchDrag } from '#/components/touchDrag'
 
 let chain: RubyMethod[] = []
@@ -17,33 +21,51 @@ const app = document.getElementById('app')!
 app.className = 'relative min-h-screen px-4 py-14 overflow-x-hidden'
 
 function sec(id: string): HTMLElement {
-  const el = document.createElement('div'); el.id = id; return el
+  const el = document.createElement('div')
+  el.id = id
+  return el
 }
 
-const headerSection  = sec('section-header')
+const headerSection = sec('section-header')
 const paletteSection = sec('section-palette')
 const builderSection = sec('section-builder')
-const runBarSection  = sec('section-runbar')
-const resultSection  = sec('section-result')
-const footerSection  = sec('section-footer')
+const runBarSection = sec('section-runbar')
+const resultSection = sec('section-result')
+const footerSection = sec('section-footer')
 
 const inner = document.createElement('div')
 inner.className = 'relative z-10 w-full max-w-2xl mx-auto space-y-5'
-inner.append(headerSection, paletteSection, builderSection, runBarSection, resultSection, footerSection)
+inner.append(
+  headerSection,
+  paletteSection,
+  builderSection,
+  runBarSection,
+  resultSection,
+  footerSection,
+)
 app.appendChild(inner)
 
 function handleMethodAdd(method: RubyMethod): void {
-  if (chain.includes(method)) return; chain.push(method); syncChain()
+  if (chain.includes(method)) return
+  chain.push(method)
+  syncChain()
 }
 function handleMethodRemove(index: number): void {
-  chain.splice(index, 1); syncChain()
+  chain.splice(index, 1)
+  syncChain()
 }
 function handleReset(): void {
-  chain = []; syncChain(); hideResultPanel()
+  chain = []
+  syncChain()
+  hideResultPanel()
 }
 function handleRetry(): void {
-  chain = []; syncChain(); hideResultPanel()
-  document.getElementById('page-top')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  chain = []
+  syncChain()
+  hideResultPanel()
+  document
+    .getElementById('page-top')
+    ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 function handleRun(): void {
   if (!wasmReady || chain.length === 0) return
@@ -57,22 +79,34 @@ function syncChain(): void {
 }
 
 renderHeader(headerSection)
-renderPalette(paletteSection, { methods: RUBY_METHODS, usedMethods: new Set(), onMethodClick: handleMethodAdd })
+renderPalette(paletteSection, {
+  methods: RUBY_METHODS,
+  usedMethods: new Set(),
+  onMethodClick: handleMethodAdd,
+})
 
-document.querySelectorAll<HTMLElement>('#palette .pill').forEach(el => {
+document.querySelectorAll<HTMLElement>('#palette .pill').forEach((el) => {
   attachTouchDrag(el, el.dataset.method as RubyMethod, handleMethodAdd)
 })
 
-renderChainBuilder(builderSection, { chain, onRemove: handleMethodRemove, onReset: handleReset, onDrop: handleMethodAdd })
+renderChainBuilder(builderSection, {
+  chain,
+  onRemove: handleMethodRemove,
+  onReset: handleReset,
+  onDrop: handleMethodAdd,
+})
 renderRunBar(runBarSection, { canRun: false, onRun: handleRun })
-renderResultPanel(resultSection, { result: { value: '', type: '', isBest: false, tier: null, code: '', chain: [] }, onRetry: handleRetry })
+renderResultPanel(resultSection, {
+  result: { value: '', type: '', isBest: false, tier: null, code: '', chain: [] },
+  onRetry: handleRetry,
+})
 
 footerSection.innerHTML = /* html */ `
   <div class="d6 rx-card">
     <div class="rx-foot">
       <div class="rx-foot-lbl">Ruby Diagnostic Clinic<br/>Prescription Form</div>
       <div class="sign-box">
-        <div class="sign-name">Yukihiro Matsumoto</div>
+        <div class="sign-name">test test</div>
         <div class="sign-title">処方医署名 / Prescriber</div>
       </div>
       <div class="wasm-status">

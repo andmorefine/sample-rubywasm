@@ -5,7 +5,10 @@ import { evalAllCandidates } from '#/wasm/answerRunner'
 import { renderAnswerHeader } from '#/components/answer/answerHeader'
 import { renderHeroResult, updateHeroResult } from '#/components/answer/heroResult'
 import { renderBestChain, updateBestChainValue } from '#/components/answer/bestChain'
-import { renderCandidateTable, updateCandidateTable } from '#/components/answer/candidateTable'
+import {
+  renderCandidateTable,
+  updateCandidateTable,
+} from '#/components/answer/candidateTable'
 import { renderStepTrace, updateStepSum } from '#/components/answer/stepTrace'
 import { renderInsight, updateInsightVal } from '#/components/answer/insight'
 
@@ -24,13 +27,13 @@ function sec(): HTMLElement {
 }
 
 // ── Render skeletons ───────────────────────────────────────────────────────
-const headerSection    = sec()
-const heroSection      = sec()
+const headerSection = sec()
+const heroSection = sec()
 const bestChainSection = sec()
-const tableSection     = sec()
-const traceSection     = sec()
-const insightSection   = sec()
-const footerSection    = sec()
+const tableSection = sec()
+const traceSection = sec()
+const insightSection = sec()
+const footerSection = sec()
 
 renderAnswerHeader(headerSection)
 renderHeroResult(heroSection)
@@ -44,7 +47,7 @@ footerSection.innerHTML = /* html */ `
     <div class="rx-foot">
       <div class="rx-foot-lbl">Ruby Diagnostic Clinic<br/>Answer Report</div>
       <div class="sign-box">
-        <div class="sign-name">Yukihiro Matsumoto</div>
+        <div class="sign-name">test test</div>
         <div class="sign-title">処方医署名 / Prescriber</div>
       </div>
       <div class="wasm-status">
@@ -68,7 +71,8 @@ footerSection.innerHTML = /* html */ `
 
     // Sort descending
     const sorted = [...results].sort((a, b) => {
-      const na = parseFloat(a.value), nb = parseFloat(b.value)
+      const na = parseFloat(a.value),
+        nb = parseFloat(b.value)
       if (isNaN(na) && isNaN(nb)) return 0
       if (isNaN(na)) return 1
       if (isNaN(nb)) return -1
@@ -83,7 +87,6 @@ footerSection.innerHTML = /* html */ `
     updateCandidateTable(results)
     updateStepSum(best.value)
     updateInsightVal(best.value)
-
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     const dot = document.getElementById('wasm-dot-ans')
@@ -91,9 +94,9 @@ footerSection.innerHTML = /* html */ `
     if (dot) dot.className = 'wasm-dot error'
     if (lbl) lbl.textContent = 'WASM 失敗'
 
-    const heroNum  = document.getElementById('hero-num')
+    const heroNum = document.getElementById('hero-num')
     const heroDesc = document.getElementById('hero-desc')
-    if (heroNum)  heroNum.textContent  = '—'
+    if (heroNum) heroNum.textContent = '—'
     if (heroDesc) heroDesc.textContent = `WASM 初期化失敗: ${msg}`
 
     const candBody = document.getElementById('cand-body')
