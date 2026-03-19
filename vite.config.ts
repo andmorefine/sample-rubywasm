@@ -25,13 +25,14 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html'),
+        main:   path.resolve(__dirname, 'index.html'),
+        answer: path.resolve(__dirname, 'answer.html'),
       },
     },
   },
   resolve: {
     alias: {
-      utils: path.resolve(__dirname, './src/utils'),
+      '#': path.resolve(__dirname, 'src'),
     },
   },
 })

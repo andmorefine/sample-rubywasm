@@ -1,22 +1,18 @@
 {
   "name": "sample-rubywasm",
   "version": "1.0.0",
-  "description": "Your Ruby skills assessment game",
-  "main": "index.js",
+  "description": "Ruby skills assessment game",
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src",
+    "format": "prettier --write 'src/**/*.ts'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andmorefine/sample-rubywasm.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/andmorefine/sample-rubywasm/issues"
-  },
-  "homepage": "https://andmorefine.github.io/sample-rubywasm/",
   "dependencies": {
     "@ruby/wasm-wasi": "^2.8.1"
   },
