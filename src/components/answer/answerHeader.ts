@@ -24,7 +24,7 @@ export function renderAnswerHeader(container: HTMLElement): void {
           <div class="lbl">最適処方</div>
           <div class="val" style="font-family:'JetBrains Mono',monospace">.methods.to_s.chars.inspect.bytes.sum</div>
         </div>
-        <div class="rx-meta-cell"><div class="lbl">処方医</div><div class="val">Dr. Matz</div></div>
+        <div class="rx-meta-cell"><div class="lbl">発行元</div><div class="val">Ruby Diagnostic Clinic</div></div>
       </div>
       <div class="rx-body" style="padding-bottom:14px">
         <a href="index.html"

@@ -2,10 +2,7 @@ import type { EvalResult, ResultPanelProps, Tier } from '#/types'
 import { buildChainHtml, buildShareText } from '#/utils/codeHighlight'
 
 const TIER_CLASS: Record<string, string> = {
-  初級: 'lv0',
-  中級: 'lv1',
-  上級: 'lv2',
-  Matz級: 'lv3',
+  '初級': 'lv0', '中級': 'lv1', '上級': 'lv2', '上上級': 'lv3',
 }
 
 const X_SVG = /* html */ `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.402 6.231H2.744l7.738-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`
@@ -56,34 +53,39 @@ export function renderResultPanel(container: HTMLElement, props: ResultPanelProp
             </a>
           </div>
         </div>
+        <div class="rx-foot">
+          <div class="rx-foot-lbl">Ruby Diagnostic Clinic<br/>Prescription Result</div>
+          <div class="sign-box">
+            <div class="sign-name">Ruby Diagnostic Clinic</div>
+            <div class="sign-title">処方機関 / Institution</div>
+          </div>
+          <div class="wasm-status">
+            <span class="wasm-dot ready"></span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--sl-l)">診断完了</span>
+          </div>
+        </div>
       </div>
     </div>
   `
-  container
-    .querySelector<HTMLButtonElement>('#retry-btn')!
-    .addEventListener('click', props.onRetry)
+  container.querySelector<HTMLButtonElement>('#retry-btn')!.addEventListener('click', props.onRetry)
 }
 
 export function showResultPanel(result: EvalResult): void {
-  const area = document.getElementById('result-area')
-  const card = document.getElementById('result-card')
-  const val = document.getElementById('result-val')
-  const type = document.getElementById('result-type')
+  const area  = document.getElementById('result-area')
+  const card  = document.getElementById('result-card')
+  const val   = document.getElementById('result-val')
+  const type  = document.getElementById('result-type')
   const badge = document.getElementById('result-badge')
   const error = document.getElementById('result-error')
-  const code = document.getElementById('result-code')
+  const code  = document.getElementById('result-code')
   const share = document.getElementById('x-share-btn') as HTMLAnchorElement | null
   const tierEl = document.getElementById('result-tier')
   const tierWrap = document.getElementById('result-tier-wrap')
   if (!area || !card || !val || !type || !badge || !error || !code) return
 
-  val.textContent = result.value
+  val.textContent  = result.value
   type.textContent = result.type
-  val.style.color = result.error
-    ? 'var(--red)'
-    : result.isBest
-      ? 'var(--grn)'
-      : 'var(--sky-d)'
+  val.style.color  = result.error ? 'var(--red)' : result.isBest ? 'var(--grn)' : 'var(--sky-d)'
 
   // Tier badge
   if (result.tier && tierEl && tierWrap) {
@@ -98,15 +100,11 @@ export function showResultPanel(result: EvalResult): void {
   if (result.error) error.textContent = `⚠ ${result.error}`
 
   badge.classList.toggle('hidden', !result.isBest)
-  code.innerHTML = buildChainHtml(result.chain, {
-    value: result.value,
-    error: result.error,
-  })
+  code.innerHTML = buildChainHtml(result.chain, { value: result.value, error: result.error })
 
   if (share) {
-    if (result.error) {
-      share.classList.add('hidden')
-    } else {
+    if (result.error) { share.classList.add('hidden') }
+    else {
       share.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(result.chain, result.value, result.isBest))}`
       share.classList.remove('hidden')
     }

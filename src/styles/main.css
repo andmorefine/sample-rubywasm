@@ -375,3 +375,35 @@ body::after {
   background: var(--white); border: 1px solid var(--bd);
   border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06);
 }
+
+/* ── chain-item drag/sort styles ── */
+.chain-grip {
+  font-size: .7rem;
+  color: var(--sky-300);
+  cursor: grab;
+  margin-right: .25rem;
+  line-height: 1;
+  user-select: none;
+  flex-shrink: 0;
+}
+.chain-item { cursor: default; }
+.chain-item:hover .chain-grip { color: var(--sky-d); }
+.chain-dragging {
+  opacity: .35;
+  border-style: dashed;
+}
+.chain-drop-target {
+  border-color: var(--sky);
+  background: var(--sky-200);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.2);
+}
+.drop-indicator {
+  display: inline-block;
+  width: 3px;
+  height: 1.4rem;
+  background: var(--sky);
+  border-radius: 2px;
+  vertical-align: middle;
+  margin: 0 2px;
+  animation: none;
+}

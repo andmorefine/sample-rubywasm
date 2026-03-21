@@ -22,7 +22,7 @@ export function renderHeader(container: HTMLElement): void {
       <div class="rx-meta">
         <div class="rx-meta-cell"><div class="lbl">診断名</div><div class="val">Ruby 力不足症</div></div>
         <div class="rx-meta-cell"><div class="lbl">目標</div><div class="val">最大整数の取得</div></div>
-        <div class="rx-meta-cell"><div class="lbl">処方医</div><div class="val">Dr. Matz</div></div>
+        <div class="rx-meta-cell"><div class="lbl">発行元</div><div class="val">Ruby Diagnostic Clinic</div></div>
       </div>
       <div class="rx-body" style="padding-bottom:18px">
         <div class="rx-patient">

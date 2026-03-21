@@ -3,7 +3,7 @@ import { SOURCE_STRING } from '#/utils/constants'
 export function renderBestChain(container: HTMLElement): void {
   container.innerHTML = /* html */ `
     <div class="d4 ans-section" style="border-left:3px solid var(--sky-d)">
-      <div class="ans-sec-lbl">// 最適処方チェーン — Matz 級</div>
+      <div class="ans-sec-lbl">// 最適処方チェーン — 上上級</div>
       <div class="code-block">
         <span class="t-cmt"># 最大整数を返すメソッドチェーン</span><br/>
         <span class="t-str">${SOURCE_STRING}</span><br/>

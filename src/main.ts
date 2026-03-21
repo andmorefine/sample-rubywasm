@@ -12,7 +12,6 @@ import {
   showResultPanel,
   hideResultPanel,
 } from '#/components/resultPanel'
-import { attachTouchDrag } from '#/components/touchDrag'
 
 let chain: RubyMethod[] = []
 let wasmReady = false
@@ -45,20 +44,34 @@ inner.append(
 )
 app.appendChild(inner)
 
+// ── Callbacks ──────────────────────────────────────────────────────────────
+
 function handleMethodAdd(method: RubyMethod): void {
   if (chain.includes(method)) return
   chain.push(method)
   syncChain()
 }
+
 function handleMethodRemove(index: number): void {
   chain.splice(index, 1)
   syncChain()
 }
+
+/** chain[from] を chain[to] の位置へ移動 */
+function handleMethodMove(from: number, to: number): void {
+  if (from < 0 || to < 0 || from >= chain.length || to >= chain.length || from === to)
+    return
+  const [moved] = chain.splice(from, 1)
+  chain.splice(to, 0, moved)
+  syncChain()
+}
+
 function handleReset(): void {
   chain = []
   syncChain()
   hideResultPanel()
 }
+
 function handleRetry(): void {
   chain = []
   syncChain()
@@ -67,47 +80,53 @@ function handleRetry(): void {
     .getElementById('page-top')
     ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
+
 function handleRun(): void {
   if (!wasmReady || chain.length === 0) return
   showResultPanel(evalChain(chain))
 }
 
+// ── Sync ───────────────────────────────────────────────────────────────────
+
 function syncChain(): void {
-  updateChainBuilder(chain, handleMethodRemove)
+  updateChainBuilder(chain, handleMethodRemove, handleMethodMove)
   updatePalette(new Set(chain), RUBY_METHODS.length)
   updateRunBar(wasmReady && chain.length > 0)
 }
 
+// ── Initial render ─────────────────────────────────────────────────────────
+
 renderHeader(headerSection)
+
 renderPalette(paletteSection, {
   methods: RUBY_METHODS,
   usedMethods: new Set(),
   onMethodClick: handleMethodAdd,
 })
 
-document.querySelectorAll<HTMLElement>('#palette .pill').forEach((el) => {
-  attachTouchDrag(el, el.dataset.method as RubyMethod, handleMethodAdd)
-})
-
 renderChainBuilder(builderSection, {
   chain,
   onRemove: handleMethodRemove,
+  onMove: handleMethodMove,
   onReset: handleReset,
-  onDrop: handleMethodAdd,
+  onDrop: handleMethodAdd, // 将来的な拡張用（現在未使用）
 })
+
 renderRunBar(runBarSection, { canRun: false, onRun: handleRun })
+
 renderResultPanel(resultSection, {
   result: { value: '', type: '', isBest: false, tier: null, code: '', chain: [] },
   onRetry: handleRetry,
 })
 
+// ── Footer ─────────────────────────────────────────────────────────────────
 footerSection.innerHTML = /* html */ `
   <div class="d6 rx-card">
     <div class="rx-foot">
       <div class="rx-foot-lbl">Ruby Diagnostic Clinic<br/>Prescription Form</div>
       <div class="sign-box">
-        <div class="sign-name">test test</div>
-        <div class="sign-title">処方医署名 / Prescriber</div>
+        <div class="sign-name">Ruby Diagnostic Clinic</div>
+        <div class="sign-title">処方機関 / Institution</div>
       </div>
       <div class="wasm-status">
         <span class="wasm-dot loading" id="wasm-dot"></span>
@@ -117,6 +136,7 @@ footerSection.innerHTML = /* html */ `
   </div>
 `
 
+// ── Boot WASM ──────────────────────────────────────────────────────────────
 updateRunBar(false, '⏳ WASM 初期化中…')
 
 initRubyVM((state: WasmState) => {

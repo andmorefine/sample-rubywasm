@@ -7,7 +7,7 @@ export type RubyMethod =
   | 'size'  | 'length' | 'sum'
 
 /** Difficulty tier */
-export type Tier = '初級' | '中級' | '上級' | 'Matz級'
+export type Tier = '初級' | '中級' | '上級' | '上上級'
 
 /** Result of evaluating a Ruby method chain via WASM */
 export interface EvalResult {
@@ -42,6 +42,7 @@ export interface PaletteProps {
 export interface ChainBuilderProps {
   chain: RubyMethod[]
   onRemove: (index: number) => void
+  onMove: (fromIndex: number, toIndex: number) => void
   onReset: () => void
   onDrop: (method: RubyMethod) => void
 }

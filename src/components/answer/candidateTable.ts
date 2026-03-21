@@ -1,7 +1,7 @@
 import type { CandidateResult, Tier } from '#/types'
 
 const TIER_CLASS: Record<Tier, string> = {
-  '初級': 'tier-0', '中級': 'tier-1', '上級': 'tier-2', 'Matz級': 'tier-3',
+  '初級': 'tier-0', '中級': 'tier-1', '上級': 'tier-2', '上上級': 'tier-3',
 }
 
 const SHIMMER_ROWS = Array.from({length:5}, (_,i) => {

@@ -4,7 +4,7 @@ export interface CandidateDef {
   label: string
   code: string
   /** 難易度ラベル */
-  tier: '初級' | '中級' | '上級' | 'Matz級'
+  tier: '初級' | '中級' | '上級' | '上上級'
 }
 
 /**
@@ -38,14 +38,14 @@ export const CANDIDATE_CHAINS: CandidateDef[] = [
   { tier: '上級', label: '.size.methods.join.bytes.to_s.sum',
     code: `${SOURCE_STRING}.size.methods.join.bytes.to_s.sum` },
 
-  // Matz級 9万〜
-  { tier: 'Matz級', label: '.chars.size.methods.join.bytes.sum',
+  // 上上級 9万〜
+  { tier: '上上級', label: '.chars.size.methods.join.bytes.sum',
     code: `${SOURCE_STRING}.chars.size.methods.join.bytes.sum` },
-  { tier: 'Matz級', label: '.chars.methods.join.bytes.sum',
+  { tier: '上上級', label: '.chars.methods.join.bytes.sum',
     code: `${SOURCE_STRING}.chars.methods.join.bytes.sum` },
-  { tier: 'Matz級', label: '.chars.methods.to_s.inspect.bytes.sum',
+  { tier: '上上級', label: '.chars.methods.to_s.inspect.bytes.sum',
     code: `${SOURCE_STRING}.chars.methods.to_s.inspect.bytes.sum` },
-  { tier: 'Matz級', label: '.methods.to_s.chars.inspect.bytes.sum',
+  { tier: '上上級', label: '.methods.to_s.chars.inspect.bytes.sum',
     code: `${SOURCE_STRING}.methods.to_s.chars.inspect.bytes.sum` },
 ]
 

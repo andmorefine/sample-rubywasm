@@ -49,7 +49,7 @@ function calcTier(num: number): Tier | null {
   if (num <= TIER_THRESHOLDS.beginner)      return '初級'
   if (num <= TIER_THRESHOLDS.intermediate)  return '中級'
   if (num <= TIER_THRESHOLDS.advanced)      return '上級'
-  return 'Matz級'
+  return '上上級'
 }
 
 export function evalChain(chain: RubyMethod[]): EvalResult {
